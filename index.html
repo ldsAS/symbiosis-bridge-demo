@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 時代的共生橋｜互補合作示範</title>
+<style>
+:root{--navy:#0b1f3a;--mid:#1e3a5f;--ink:#0f172a;--cyan:#22d3ee;--teal:#0e7490;--muted:#526577;--line:#dce4ee;--paper:#f3f6fb;--tint:#e6f6fa;--amber:#92400e;--amber-bg:#fef3c7}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:var(--paper);font:17px/1.6 system-ui,"Microsoft JhengHei",sans-serif}
+header{background:var(--navy);color:#fff;padding:26px max(24px,calc((100vw - 1180px)/2));display:flex;align-items:center;justify-content:space-between;gap:24px}
+header .eyebrow{margin:0 0 4px;color:var(--cyan);font-size:13px;font-weight:700;letter-spacing:.12em}
+h1{font-size:30px;margin:0;line-height:1.25}
+header p.sub{margin:6px 0 0;color:#cbd9e8}
+header svg{flex:none;width:150px;height:64px}
+main{max-width:1180px;margin:24px auto;padding:0 24px}
+h2{font-size:24px;margin:0 0 16px;color:var(--navy)}
+h3{margin:0 0 8px;color:var(--navy);font-size:19px}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;min-height:46px;border:0;border-radius:8px;background:var(--teal);color:#fff;padding:9px 18px;font-weight:650}
+button:hover:not(:disabled){filter:brightness(1.08)}
+button.secondary{background:#e2eaf2;color:var(--ink)}
+button:disabled{background:#d7e0e6;color:var(--muted);cursor:default}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #0284c7;outline-offset:3px}
+.notice{border:1px solid var(--line);border-radius:10px;padding:12px 18px;background:#fff;margin-bottom:18px;font-size:15px;color:var(--muted)}
+.notice strong{color:var(--teal)}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 20px;padding:0}
+.steps button{width:100%;height:100%;display:flex;align-items:center;gap:12px;text-align:left;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-weight:650;box-shadow:0 2px 8px #0b1f3a14}
+.steps .num{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--cyan);font-size:14px;border:1px solid var(--cyan)}
+.steps .done .num{background:var(--teal);color:#fff;border-color:var(--teal)}
+.steps small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+nav{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px}
+nav button[aria-selected=true]{background:var(--navy);color:#fff}
+#count{display:inline-block;min-width:24px;margin-left:6px;padding:0 7px;border-radius:12px;background:var(--cyan);color:var(--navy);font-size:14px;text-align:center}
+#feedback{min-height:30px;color:var(--teal);font-weight:650;margin:0 0 6px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;display:flex;flex-direction:column;box-shadow:0 2px 8px #0b1f3a14}
+.card.own{border-color:var(--teal);background:var(--tint)}
+.card p{margin:4px 0 12px}
+.card button{margin-top:auto;align-self:flex-start}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.pill{font-size:13px;font-weight:700;padding:2px 10px;border-radius:12px;background:var(--tint);color:var(--teal)}
+.pill.seek{background:var(--amber-bg);color:var(--amber)}
+.pill.cat{background:#e2eaf2;color:var(--mid)}
+.pill.mine{background:var(--navy);color:#fff}
+.need{border-top:1px dashed var(--line);padding-top:10px;color:var(--muted);font-size:15px}
+.need b{color:var(--ink)}
+.muted{color:var(--muted)}
+.filters{display:flex;gap:12px;margin-bottom:14px}
+.filters input{flex:1}
+.filters select{width:230px}
+input,select,textarea{background:#fff;border:1px solid #92a4b5;border-radius:8px;padding:10px;width:100%;color:var(--ink)}
+label{display:block;font-weight:650;margin-bottom:7px}
+.field{margin-bottom:18px}
+form{max-width:780px;background:#fff;padding:28px;border:1px solid var(--line);border-radius:12px;box-shadow:0 2px 8px #0b1f3a14}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.invite{display:grid;grid-template-columns:1fr 250px;gap:24px;margin:14px 0;background:#fff;border:1px solid var(--line);padding:22px;border-radius:12px;box-shadow:0 2px 8px #0b1f3a14}
+.status{display:inline-block;font-size:13px;font-weight:700;padding:2px 10px;border-radius:12px;margin-bottom:8px;background:#e2eaf2;color:var(--mid)}
+.status.s1{background:var(--amber-bg);color:var(--amber)}
+.status.s2{background:var(--tint);color:var(--teal)}
+.hint{border-left:4px solid var(--cyan);background:#fff;padding:10px 16px;border-radius:0 8px 8px 0;font-size:15px;color:var(--muted);margin-bottom:10px}
+dialog{width:min(600px,94vw);border:1px solid var(--line);border-radius:14px;padding:28px}
+dialog::backdrop{background:#0b1f3a99}
+dialog form{padding:0;border:0;box-shadow:none}
+.actions{display:flex;gap:12px;margin-top:18px}
+.empty{padding:35px;border:1px dashed #8fa5b8;border-radius:12px;text-align:center;background:#fff;grid-column:1/-1}
+footer{max-width:1180px;margin:36px auto;padding:22px 24px;border-top:1px solid var(--line);font-size:14px;color:var(--muted);display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+footer p{margin:0}
+[hidden]{display:none!important}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.invite{grid-template-columns:1fr}header svg{display:none}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.filters{flex-direction:column}.filters select{width:100%}main{padding:0 16px}header{padding:20px 16px}h1{font-size:25px}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <p class="eyebrow">互補合作示範原型</p>
+    <h1>AI 時代的共生橋</h1>
+    <p class="sub">串起既有服務與新型小團隊，讓互補能力成為合作機會</p>
+  </div>
+  <svg viewBox="0 0 150 64" aria-hidden="true">
+    <g stroke="#1e3a5f" stroke-width="1.5"><line x1="12" y1="46" x2="42" y2="16"/><line x1="108" y1="44" x2="138" y2="14"/><line x1="42" y1="16" x2="30" y2="54"/></g>
+    <line x1="42" y1="16" x2="108" y2="44" stroke="#22d3ee" stroke-width="2.5"/>
+    <g fill="#1e3a5f" stroke="#22d3ee"><circle cx="12" cy="46" r="5"/><circle cx="30" cy="54" r="4"/><circle cx="138" cy="14" r="5"/></g>
+    <g fill="#22d3ee"><circle cx="42" cy="16" r="8"/><circle cx="108" cy="44" r="8"/></g>
+  </svg>
+</header>
+<main>
+  <div class="notice"><strong>課程示範原型</strong>｜所有業者均為虛構示範資料。刊登與邀請只儲存在此瀏覽器，不會通知真實業者。</div>
+
+  <ol class="steps" aria-label="示範流程">
+    <li><button type="button" data-step="publish"><span class="num">01</span><span>刊登能力／需求<small>說明能提供什麼、需要什麼</small></span></button></li>
+    <li><button type="button" data-step="directory"><span class="num">02</span><span>找到互補夥伴<small>依類別與關鍵字查找</small></span></button></li>
+    <li><button type="button" data-step="directory"><span class="num">03</span><span>送出合作邀請<small>留下合作目的</small></span></button></li>
+    <li><button type="button" data-step="progress"><span class="num">04</span><span>查看合作進度<small>更新並保留狀態</small></span></button></li>
+  </ol>
+
+  <nav aria-label="主要功能">
+    <button class="secondary" data-tab="directory" aria-selected="true">探索互補能力</button>
+    <button class="secondary" data-tab="publish" aria-selected="false">刊登能力／需求</button>
+    <button class="secondary" data-tab="progress" aria-selected="false">合作進度<span id="count">0</span></button>
+  </nav>
+  <p id="feedback" role="status" aria-live="polite"></p>
+
+  <section id="directory">
+    <h2>找到可以一起交付的夥伴</h2>
+    <div class="filters">
+      <input id="search" aria-label="搜尋服務或需求" placeholder="搜尋服務、能力或需求">
+      <select id="category" aria-label="能力類別"><option value="">全部類別</option><option>話務</option><option>會員</option><option>知識服務</option><option>自動化</option></select>
+    </div>
+    <p class="muted" id="results"></p>
+    <div id="cards" class="grid"></div>
+  </section>
+
+  <section id="publish" hidden>
+    <h2>說明你的強項與需要的幫助</h2>
+    <form id="publishForm">
+      <div class="field"><label for="name">團隊／服務名稱</label><input id="name" maxlength="40" required placeholder="例如：知識問答工作室"></div>
+      <div class="two">
+        <div class="field"><label for="type">刊登目的</label><select id="type"><option>提供能力</option><option>尋找合作</option></select></div>
+        <div class="field"><label for="serviceCategory">服務／需求類別</label><select id="serviceCategory"><option>話務</option><option>會員</option><option>知識服務</option><option>自動化</option></select></div>
+      </div>
+      <div class="field"><label for="description">你能提供的能力</label><textarea id="description" rows="3" maxlength="240" required placeholder="描述可交付的服務與適用場景"></textarea></div>
+      <div class="field"><label for="need">你希望補足的能力</label><input id="need" maxlength="120" required placeholder="例如：話務入口、會員資料關聯"></div>
+      <button type="submit">刊登並查看目錄</button>
+    </form>
+  </section>
+
+  <section id="progress" hidden>
+    <h2>合作進度</h2>
+    <p class="hint">示範情境中可手動更新進度；正式版需有對方回覆與權限控管。「已達成合作意向」只代表雙方同意合作，不等於完成交付；分工、驗收與交付紀錄留待後續試點。</p>
+    <div id="invites"></div>
+  </section>
+
+  <dialog id="inviteDialog" aria-labelledby="inviteTitle">
+    <form id="inviteForm">
+      <h2 id="inviteTitle">提出合作邀請</h2>
+      <p id="inviteTarget"></p>
+      <label for="purpose">這次合作希望完成什麼？</label>
+      <textarea id="purpose" rows="4" maxlength="300" required placeholder="例如：將知識問答服務接入話務流程，先做一個客戶試點"></textarea>
+      <div class="actions"><button type="submit">送出示範邀請</button><button type="button" class="secondary" id="cancel">取消</button></div>
+    </form>
+  </dialog>
+</main>
+<footer>
+  <p>原型使用標籤與關鍵字篩選，未接 AI 模型、金流或正式客戶資料。資料可隨時重設。</p>
+  <button id="reset" class="secondary">重設示範資料</button>
+</footer>
+<script>
+const seed=[
+ {id:'a',name:'溝通流程夥伴',type:'提供能力',category:'話務',description:'提供企業話務與來電流程協作，協助服務接上客戶溝通入口。',need:'知識問答與語音後處理'},
+ {id:'b',name:'會員服務工作室',type:'提供能力',category:'會員',description:'協助會員資料整理與客戶識別流程，建立服務間的資料關聯。',need:'自動化與垂直場景服務'},
+ {id:'c',name:'知識應用小隊',type:'尋找合作',category:'知識服務',description:'將核准的知識內容整理成可查找的問答服務，支援客服場景。',need:'話務入口與會員串接'},
+ {id:'d',name:'流程自動化工坊',type:'提供能力',category:'自動化',description:'協助表單、通知及服務開通流程串接，降低重複操作。',need:'既有服務商與試點場景'}];
+const KEY='symbiosis-demo-v1';
+const STATUSES=['待回覆','洽談中','已達成合作意向','已結束'];
+let state;
+try{state=JSON.parse(localStorage.getItem(KEY)||'null')}catch{}
+if(!state||!Array.isArray(state.cards)||!Array.isArray(state.invites))state={cards:structuredClone(seed),invites:[]};
+// 舊版狀態名稱相容
+state.invites.forEach(i=>{if(i.status==='已達成合作')i.status='已達成合作意向'});
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function tell(s){$('feedback').textContent=s}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{tell('此瀏覽器無法保存資料，離開頁面後將清除本次示範。')}}
+function tab(id){
+  ['directory','publish','progress'].forEach(x=>$(x).hidden=x!==id);
+  document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===id)));
+  render();
+}
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tell('');tab(b.dataset.tab)});
+document.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>{tell('');tab(b.dataset.step)});
+function renderSteps(){
+  const done=[state.cards.some(c=>c.own),state.cards.some(c=>c.own),state.invites.length>0,state.invites.some(i=>i.status!=='待回覆')];
+  document.querySelectorAll('.steps li').forEach((li,n)=>li.classList.toggle('done',done[n]));
+}
+function render(){
+  const q=$('search').value.trim().toLowerCase(),cat=$('category').value;
+  const cards=state.cards.filter(c=>(!cat||c.category===cat)&&(!q||[c.name,c.description,c.need].join(' ').toLowerCase().includes(q)));
+  $('results').textContent=`找到 ${cards.length} 項能力／需求`;
+  $('cards').innerHTML=cards.length?cards.map(c=>{
+    const invited=state.invites.some(i=>i.target===c.id);
+    return `<article class="card${c.own?' own':''}"><div class="tags"><span class="pill${c.type==='尋找合作'?' seek':''}">${esc(c.type)}</span><span class="pill cat">${esc(c.category)}</span>${c.own?'<span class="pill mine">我的刊登</span>':''}</div><h3>${esc(c.name)}</h3><p>${esc(c.description)}</p><p class="need"><b>需要：</b>${esc(c.need)}</p><button data-invite="${esc(c.id)}" ${c.own||invited?'disabled':''}>${c.own?'我的刊登':invited?'已邀請':'提出合作邀請'}</button></article>`}).join(''):'<p class="empty">沒有符合的結果，請調整關鍵字或類別。</p>';
+  $('count').textContent=state.invites.length;
+  $('invites').innerHTML=state.invites.length?state.invites.map(i=>`<article class="invite"><div><span class="status s${STATUSES.indexOf(i.status)}">${esc(i.status)}</span><h3>${esc(i.name)}</h3><p>${esc(i.purpose)}</p><small class="muted">${esc(i.date)} · 僅在本機示範</small></div><div><label for="status-${i.id}">更新合作狀態</label><select id="status-${i.id}" data-status="${i.id}">${STATUSES.map(s=>`<option ${s===i.status?'selected':''}>${s}</option>`).join('')}</select></div></article>`).join(''):'<p class="empty">目前沒有合作邀請。到「探索互補能力」選擇夥伴開始。</p>';
+  document.querySelectorAll('[data-invite]').forEach(b=>b.onclick=()=>openInvite(b.dataset.invite));
+  document.querySelectorAll('[data-status]').forEach(s=>s.onchange=()=>{state.invites.find(i=>i.id===s.dataset.status).status=s.value;save();render();tell('合作進度已更新。')});
+  renderSteps();
+}
+let target=null;
+function openInvite(id){target=state.cards.find(c=>c.id===id);$('inviteTarget').textContent='合作對象：'+target.name;$('purpose').value='';$('inviteDialog').showModal();$('purpose').focus()}
+$('search').oninput=render;$('category').onchange=render;$('cancel').onclick=()=>$('inviteDialog').close();
+$('publishForm').onsubmit=e=>{
+  e.preventDefault();
+  const name=$('name').value.trim(),description=$('description').value.trim(),need=$('need').value.trim();
+  if(!name||!description||!need){tell('請填寫名稱、能力與需求，不能只有空白。');return}
+  state.cards.unshift({id:'own-'+Date.now(),name,description,need,type:$('type').value,category:$('serviceCategory').value,own:true});
+  save();e.target.reset();$('search').value='';$('category').value='';tab('directory');tell('已刊登。接著可找尋互補夥伴。');
+};
+$('inviteForm').onsubmit=e=>{
+  e.preventDefault();
+  const purpose=$('purpose').value.trim();
+  if(!purpose){$('purpose').setCustomValidity('請說明合作目的');$('purpose').reportValidity();return}
+  if(state.invites.some(i=>i.target===target.id)){tell('已有這位夥伴的邀請。');return}
+  state.invites.push({id:'i'+Date.now(),target:target.id,name:target.name,purpose,status:'待回覆',date:new Date().toLocaleDateString('zh-TW')});
+  save();$('inviteDialog').close();tab('progress');tell('示範邀請已建立；未發送真實通知。');
+};
+$('purpose').oninput=()=>$('purpose').setCustomValidity('');
+$('reset').onclick=()=>{if(confirm('要清除本機刊登與邀請，恢復示範資料嗎？')){state={cards:structuredClone(seed),invites:[]};save();$('search').value='';$('category').value='';tab('directory');tell('已重設示範資料。')}};
+render();
+</script>
+</body>
+</html>
